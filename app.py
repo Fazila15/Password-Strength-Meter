@@ -45,23 +45,88 @@ lottie_url = "https://assets10.lottiefiles.com/packages/lf20_jcikwtux.json"
 lottie_security = load_lottie_url(lottie_url)
 
 # Streamlit UI
-st.set_page_config(page_title="Password Strength Meter", page_icon="🔐", layout="centered")
-st.markdown(
-    "<h1 style='text-align: center; color: #0073E6;'>🔒 Ultra Password Strength Meter</h1>",
-    unsafe_allow_html=True,
-)
+st.set_page_config(page_title="Password Strength Meter", page_icon="🔐", layout="wide")
 
-st.markdown(
-    "<p style='text-align: center; font-size: 18px; color: #444;'>Check your password security in real-time!</p>",
-    unsafe_allow_html=True,
-)
+# Page Title and Description with Gradient Background
+st.markdown("""
+    <style>
+        body {
+            background: linear-gradient(to right, #0073E6, #50C878) !important;
+            color: white;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+        .header {
+            text-align: center;
+            font-size: 38px;
+            font-weight: 700;
+            background: linear-gradient(to right, #0073E6, #50C878);
+            -webkit-background-clip: text;
+            color: transparent;
+            text-transform: uppercase;
+        }
+        .subheader { 
+            text-align: center; 
+            font-size: 22px; 
+            color: #444;
+            font-weight: 500;
+        }
+        .footer { 
+            text-align: center; 
+            font-size: 16px; 
+            color: #0073E6;
+            font-weight: 500;
+        }
+        .password-box { 
+            text-align: center; 
+            font-size: 24px; 
+            font-weight: bold; 
+            transition: all 0.5s ease;
+        }
+        .gradient-bar {
+            height: 12px; 
+            border-radius: 10px; 
+            transition: all 0.5s ease;
+        }
+        .password-input {
+            text-align: center;
+            font-size: 20px;
+            padding: 12px;
+            font-weight: 500;
+        }
+        .suggestions { 
+            font-size: 16px; 
+            color: #444;
+        }
+        hr {
+            border-top: 1px solid #fff;
+        }
+        .animation-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+    </style>
+    <div class="header">Password Strength Meter By Fazila Malik</div>
+    <div class="subheader">Check your password security in real-time!</div>
+""", unsafe_allow_html=True)
 
-# Displaying Best Password Practices at the Top
+# Display Best Password Practices at the Top
 st.markdown("<hr>", unsafe_allow_html=True)
-st.markdown(
-    "<h3 style='color: #0073E6;'>💡 Best Practices for Creating a Strong Password</h3>",
-    unsafe_allow_html=True,
-)
+st.markdown("<h3 style='color: #0073E6;'>💡 Best Practices for Creating a Strong Password</h3>", unsafe_allow_html=True)
 
 st.markdown("""
 - Use at least **12-16 characters** for better security.
@@ -74,23 +139,25 @@ st.markdown("""
 - **Never share your password** with anyone!
 """, unsafe_allow_html=True)
 
-# Show Lottie Animation
+# Show Lottie Animation in Center
+st.markdown("<div class='animation-container'>", unsafe_allow_html=True)
 if lottie_security:
     st_lottie(lottie_security, speed=1, width=250, height=250)
+st.markdown("</div>", unsafe_allow_html=True)
 
-# Password Input
-password = st.text_input("Enter your password:")
+# Password Input Section in a Card Style
+password = st.text_input("Enter your password:", key="password")
 
 if password:
     strength, color, score = check_password_strength(password)
 
     # Display Strength Meter
     st.markdown(f"""
-        <div style="text-align: center; font-size: 24px; font-weight: bold; color: {color};">
+        <div class="password-box" style="color: {color};">
             {strength}
         </div>
-        <div style="background: linear-gradient(to right, {color} {score}%, #D3D3D3 {score}%); height: 12px; border-radius: 10px;"></div>
-        """, unsafe_allow_html=True)
+        <div class="gradient-bar" style="background: linear-gradient(to right, {color} {score}%, #D3D3D3 {score}%);"></div>
+    """, unsafe_allow_html=True)
 
     # Password Improvement Suggestions
     st.subheader("🔹 How to Improve Your Password")
@@ -108,10 +175,13 @@ if password:
 
     if suggestions:
         for suggestion in suggestions:
-            st.markdown(f"✅ {suggestion}")
+            st.markdown(f"✅ {suggestion}", unsafe_allow_html=True)
     else:
         st.success("Your password is **Ultra Strong**! 🚀")
 
-# Footer
-st.markdown("<hr><center>💙 Built with Streamlit | Ultra Secure Password Analyzer</center>", unsafe_allow_html=True)
-st.markdown("<hr><center>Made By Fazila Malik💙</center>", unsafe_allow_html=True)
+# Footer Section
+st.markdown("<hr>", unsafe_allow_html=True)
+st.markdown("<div class='footer'>💙 Built with Streamlit | Ultra Secure Password Analyzer</div>", unsafe_allow_html=True)
+st.markdown("<div class='footer'>Made By Fazila Malik💙</div>", unsafe_allow_html=True)
+
+st.markdown("</div>", unsafe_allow_html=True)
